@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: petclinic
-        image: registry.gitlab.com/renekevin/petclinic
+        image: registry.gitlab.com/renekevin/devops-petclinic
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
