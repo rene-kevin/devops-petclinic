@@ -8,7 +8,7 @@ before_script:
 
 build:
   stage: build
-  script: ./mvnw package
+  script: mvn package
   artifacts:
     paths:
       - target/petclinic.war
