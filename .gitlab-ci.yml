@@ -8,7 +8,7 @@ before_script:
 
 build:
   stage: build
-  script: ./mvnw package -P MySQL
+  script: ./mvnw package
   artifacts:
     paths:
       - target/petclinic.war
