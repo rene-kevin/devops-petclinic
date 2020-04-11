@@ -1,4 +1,4 @@
-FROM openjdk:8u111-jdk-alpine
+FROM tomcat:8.5.53-jdk8-openjdk
 VOLUME /tmp
-ADD /target/petclinic.war petclinic.war
-ENTRYPOINT ["java","-jar","/petclinic.war"]
+ADD /target/petclinic.war /usr/local/tomcat/webapps/petclinic.war
+ENTRYPOINT ["java","-jar","/usr/local/tomcat/webapps/petclinic.war"]
