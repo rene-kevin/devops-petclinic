@@ -22,7 +22,7 @@ maven-build:
 docker-build:
   stage: package
   script:
-    - docker build -t registry.gitlab.com/renekevin/devops-petclinic .
+    - docker build -t $AZURE_REGISTRY/petclinic:latest .
 #    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
 #    - docker push registry.gitlab.com/renekevin/devops-petclinic
     - docker login -u $AZURE_LOGIN -p $AZURE_PASSWORD $AZURE_REGISTRY
