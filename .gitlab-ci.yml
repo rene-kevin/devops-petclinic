@@ -21,7 +21,6 @@ maven-build:
   
 docker-build:
   stage: package
-  image: microsoft/azure-cli
   script:
     - docker build -t registry.gitlab.com/renekevin/devops-petclinic .
 #    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
