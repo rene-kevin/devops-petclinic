@@ -39,7 +39,7 @@ jobs:
     # Build + Push docker image to ACR
     - run: |
         docker build . -t ${{ env.ACR_REPOSITORY }}/petclinic:latest
-        docker push ${{ secrets.ACR_USER }}/petclinic:latest
+        docker push ${{ secrets.ACR_REPOSITORY }}/petclinic:latest
     # Select AKS cluster
     - uses: azure/aks-set-context@v1
       with:
