@@ -25,6 +25,12 @@ docker-build:
     - docker build -t $AZURE_REGISTRY/petclinic:latest .
     - docker login -u $AZURE_LOGIN -p $AZURE_PASSWORD $AZURE_REGISTRY
     - docker push $AZURE_REGISTRY/petclinic:latest
+
+deploy-azure:
+  stage: deploy
+  image: microsoft/azure-cli
+  script:
+    - az login -u $AZURE_LOGIN -p $AZURE_PASSWORD $AZURE_REGISTRY
     - az aks get-credentials --resource-group myResourceGroup --name petclinic-aks-cluster
     - docker-compose up -d
     - kubectl apply -f acr-petclinic.yaml
