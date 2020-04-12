@@ -47,14 +47,16 @@ jobs:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
         cluster-name: ${{ env.AKS_CLUSTER }}
         resource-group: ${{ env.AKS_RESOURCEGROUP }}
+      id: login
     # Imagepullscret for ACR
     - uses: Azure/k8s-create-secret@v1
       with:
-        namesapce: ${{ env.NAMESPACE }}
-        container-registry-url: ${{ env.ACR_REPOSITORY }}
+        namesapce: '${{ env.NAMESPACE }}'
+        container-registry-url: '${{ env.ACR_REPOSITORY }}'
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
         container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-        secret-name: ${{ env.ACR_REPOSITORY }}-secret
+        secret-name: '${{ env.ACR_REPOSITORY }}-secret'
+      id: create-secret
     # Deploy to AKS
     - uses: Azure/k8s-deploy@v1
       with:
