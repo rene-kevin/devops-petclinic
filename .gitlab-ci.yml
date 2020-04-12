@@ -7,9 +7,15 @@ variables:
   SPRING_PROFILES_ACTIVE: gitlab-ci
 
 stages:
+  - test
   - build
   - package
   - deploy
+
+maven-test:
+  image: maven:3-jdk-8
+  stage: test
+  script: "mvn test"
 
 maven-build:
   image: maven:3-jdk-8
@@ -19,7 +25,7 @@ maven-build:
     paths:
       - target/*.war
   
-docker-build:
+image-build:
   stage: package
   script:
     - docker build -t $AZURE_REGISTRY/petclinic:latest .
@@ -28,10 +34,8 @@ docker-build:
 
 deploy-azure:
   stage: deploy
-  image: microsoft/azure-cli
+  image: lachlanevenson/k8s-kubectl:latest
   script:
-    - az login -u $az_l -p $az_p
-    - az aks get-credentials --resource-group myResourceGroup --name petclinic-aks-cluster
-    - docker-compose up -d
+    - kubectl version
     - kubectl apply -f acr-petclinic.yaml
     - kubectl get service
