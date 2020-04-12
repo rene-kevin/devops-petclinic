@@ -58,7 +58,7 @@ jobs:
     # Imagepullscret for ACR
     - uses: Azure/k8s-create-secret@v1
       with:
-        namesapce: '${{ env.NAMESPACE }}'
+        namespace: '${{ env.NAMESPACE }}'
         container-registry-url: '${{ env.ACR_REPOSITORY }}'
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
         container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
