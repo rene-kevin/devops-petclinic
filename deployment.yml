@@ -1,19 +1,38 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: petclinic
+  name: __CI_BUILD_REF_SLUG__
+  labels:
+    app: __CI_BUILD_REF_SLUG__
+    track: stable
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: __CI_BUILD_REF_SLUG__
   template:
     metadata:
       labels:
-        app: petclinic
+        app: __CI_BUILD_REF_SLUG__
+        track: stable
     spec:
+      imagePullSecrets:
+        - name: regsecret
       containers:
-      - name: petclinic
-        image: registry.gitlab.com/renekevin/devops-petclinic
+      - name: app
+        image: renekevin.azurecr.io/petclinic:__VERSION__
         imagePullPolicy: Always
         ports:
-        - containerPort: 8080
-      imagePullSecrets:
-        - name: registry.gitlab.com
+        - containerPort: 8000
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 3
+          timeoutSeconds: 2
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 3
+          timeoutSeconds: 2
