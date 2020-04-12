@@ -23,7 +23,8 @@ docker-build:
   stage: package
   script:
     - docker build -t $AZURE_REGISTRY/petclinic:latest .
-#    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-#    - docker push registry.gitlab.com/renekevin/devops-petclinic
     - docker login -u $AZURE_LOGIN -p $AZURE_PASSWORD $AZURE_REGISTRY
     - docker push $AZURE_REGISTRY/petclinic:latest
+    - docker-compose up -d
+    - kubectl apply -f acr-petclinic.yaml
+    - kubectl get service
