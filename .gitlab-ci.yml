@@ -30,7 +30,7 @@ deploy-azure:
   stage: deploy
   image: microsoft/azure-cli
   script:
-    - az login -u $AZURE_LOGIN -p $AZURE_PASSWORD
+    - az login -u $az_l -p $az_p
     - az aks get-credentials --resource-group myResourceGroup --name petclinic-aks-cluster
     - docker-compose up -d
     - kubectl apply -f acr-petclinic.yaml
