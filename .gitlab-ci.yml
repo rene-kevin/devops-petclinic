@@ -36,6 +36,6 @@ deploy-azure:
   stage: deploy
   image: lachlanevenson/k8s-kubectl:latest
   script:
-    - kubectl version
+    - docker-compose up -d
     - kubectl apply -f acr-petclinic.yaml
     - kubectl get service
