@@ -36,6 +36,13 @@ deploy-azure:
   stage: deploy
   image: lachlanevenson/k8s-kubectl:latest
   script:
-    - docker-compose up -d
-    - kubectl apply -f acr-petclinic.yaml
-    - kubectl get service
+#    - docker-compose up -d
+#    - kubectl apply -f acr-petclinic.yaml
+#    - kubectl get service
+    - sed -i "s/__CI_BUILD_REF_SLUG__/${CI_ENVIRONMENT_SLUG}/" deployment.yaml ingress.yaml service.yaml
+    - sed -i "s/__VERSION__/${CI_COMMIT_REF_NAME}/" deployment.yaml ingress.yaml service.yaml
+    - kubectl apply -f deployment.yaml
+    - kubectl apply -f service.yaml
+    - kubectl apply -f ingress.yaml
+    - kubectl rollout status -f deployment.yaml
+    - kubectl get all,ing -l app=${CI_ENVIRONMENT_SLUG}
